@@ -1,0 +1,74 @@
+timestamp_utc,event,detail
+2026-10-18T17:17:46.475+00:00,SUPERVISOR_STARTED,Process supervisor operational
+2026-10-18T17:17:46.609+00:00,STARTUP,first application startup
+2026-10-18T17:17:46.618+00:00,WORKER_STARTED,cursor=0 demo=True
+2026-10-18T17:17:46.619+00:00,READING_ACCEPTED,sample=1802 source=MODULE6_SOURCE_REPLAY status=OK raw=21.88 reason=passed source and temperature-range validation
+2026-10-18T17:17:46.962+00:00,HEALTH_CHANGED,STARTING -> HEALTHY; Accepted replay value is fresh; no active alert
+2026-10-18T17:17:46.971+00:00,READING_ACCEPTED,sample=1803 source=MODULE6_SOURCE_REPLAY status=OK raw=21.99 reason=passed source and temperature-range validation
+2026-10-18T17:17:47.323+00:00,READING_ACCEPTED,sample=1804 source=MODULE6_SOURCE_REPLAY status=OK raw=22.14 reason=passed source and temperature-range validation
+2026-10-18T17:17:47.676+00:00,READING_ACCEPTED,sample=1805 source=MODULE6_SOURCE_REPLAY status=OK raw=22.09 reason=passed source and temperature-range validation
+2026-10-18T17:17:48.027+00:00,READING_ACCEPTED,sample=1806 source=MODULE6_SOURCE_REPLAY status=OK raw=22.34 reason=passed source and temperature-range validation
+2026-10-18T17:17:48.379+00:00,READING_ACCEPTED,sample=1807 source=MODULE6_SOURCE_REPLAY status=OK raw=22.05 reason=passed source and temperature-range validation
+2026-10-18T17:17:48.731+00:00,READING_ACCEPTED,sample=1808 source=MODULE6_SOURCE_REPLAY status=OK raw=21.88 reason=passed source and temperature-range validation
+2026-10-18T17:17:49.083+00:00,READING_ACCEPTED,sample=1809 source=MODULE6_SOURCE_REPLAY status=OK raw=21.82 reason=passed source and temperature-range validation
+2026-10-18T17:17:49.435+00:00,READING_ACCEPTED,sample=1810 source=MODULE6_SOURCE_REPLAY status=OK raw=22.1 reason=passed source and temperature-range validation
+2026-10-18T17:17:49.787+00:00,READING_ACCEPTED,sample=1811 source=TEST_INJECTED status=OK raw=30.5 reason=passed source and temperature-range validation
+2026-10-18T17:17:50.140+00:00,READING_ACCEPTED,sample=1812 source=TEST_INJECTED status=OK raw=30.8 reason=passed source and temperature-range validation
+2026-10-18T17:17:50.492+00:00,ALERT_ACTIVATED,sample=1813 temperature=31.2 threshold=30.0 clear=28.5
+2026-10-18T17:17:50.492+00:00,READING_ACCEPTED,sample=1813 source=TEST_INJECTED status=OK raw=31.2 reason=passed source and temperature-range validation
+2026-10-18T17:17:50.821+00:00,HEALTH_CHANGED,HEALTHY -> DEGRADED; Persistent high-temperature alert active
+2026-10-18T17:17:50.844+00:00,READING_ACCEPTED,sample=1814 source=TEST_INJECTED status=OK raw=31.0 reason=passed source and temperature-range validation
+2026-10-18T17:17:51.196+00:00,READING_ACCEPTED,sample=1815 source=TEST_INJECTED status=OK raw=31.0 reason=passed source and temperature-range validation
+2026-10-18T17:17:51.548+00:00,READING_ACCEPTED,sample=1816 source=TEST_INJECTED status=OK raw=31.0 reason=passed source and temperature-range validation
+2026-10-18T17:17:51.900+00:00,READING_ACCEPTED,sample=1817 source=TEST_INJECTED status=OK raw=31.0 reason=passed source and temperature-range validation
+2026-10-18T17:17:52.252+00:00,READING_ACCEPTED,sample=1818 source=TEST_INJECTED status=OK raw=31.0 reason=passed source and temperature-range validation
+2026-10-18T17:17:52.604+00:00,READING_ACCEPTED,sample=1819 source=TEST_INJECTED status=OK raw=31.0 reason=passed source and temperature-range validation
+2026-10-18T17:17:52.956+00:00,READING_ACCEPTED,sample=1820 source=TEST_INJECTED status=OK raw=31.0 reason=passed source and temperature-range validation
+2026-10-18T17:17:53.308+00:00,READING_ACCEPTED,sample=1821 source=TEST_INJECTED status=OK raw=31.0 reason=passed source and temperature-range validation
+2026-10-18T17:17:53.660+00:00,READING_ACCEPTED,sample=1822 source=TEST_INJECTED status=OK raw=31.0 reason=passed source and temperature-range validation
+2026-10-18T17:17:54.013+00:00,READING_ACCEPTED,sample=1823 source=TEST_INJECTED status=OK raw=31.0 reason=passed source and temperature-range validation
+2026-10-18T17:17:54.264+00:00,APPLICATION_ERROR,<NotFound '404: Not Found'>
+2026-10-18T17:17:54.367+00:00,READING_ACCEPTED,sample=1824 source=TEST_INJECTED status=OK raw=31.0 reason=passed source and temperature-range validation
+2026-10-18T17:17:54.719+00:00,READING_ACCEPTED,sample=1825 source=TEST_INJECTED status=OK raw=31.0 reason=passed source and temperature-range validation
+2026-10-18T17:17:55.072+00:00,READING_ACCEPTED,sample=1826 source=TEST_INJECTED status=OK raw=31.0 reason=passed source and temperature-range validation
+2026-10-18T17:17:55.353+00:00,APPLICATION_ERROR,<NotFound '404: Not Found'>
+2026-10-18T17:17:55.426+00:00,READING_ACCEPTED,sample=1827 source=TEST_INJECTED status=OK raw=31.0 reason=passed source and temperature-range validation
+2026-10-18T17:17:55.714+00:00,APPLICATION_ERROR,"ValueError(""invalid literal for int() with base 10: 'not-a-number'"")"
+2026-10-18T17:17:56.339+00:00,APPLICATION_ERROR,<NotFound '404: Not Found'>
+2026-10-18T17:17:56.781+00:00,READING_ACCEPTED,sample=1828 source=TEST_INJECTED status=OK raw=31.0 reason=passed source and temperature-range validation
+2026-10-18T17:17:57.134+00:00,READING_ACCEPTED,sample=1829 source=TEST_INJECTED status=OK raw=31.0 reason=passed source and temperature-range validation
+2026-10-18T17:17:57.486+00:00,READING_REJECTED,sample=1830 source=TEST_INJECTED status=MISSING raw=None reason=no numeric reading available
+2026-10-18T17:17:57.486+00:00,MISSING_INPUT,sample=1830 no reading
+2026-10-18T17:17:58.137+00:00,APPLICATION_ERROR,<NotFound '404: Not Found'>
+2026-10-18T17:17:58.442+00:00,READING_REJECTED,sample=1831 source=TEST_INJECTED status=MISSING raw=None reason=no numeric reading available
+2026-10-18T17:17:58.442+00:00,MISSING_INPUT,sample=1831 no reading
+2026-10-18T17:17:58.795+00:00,READING_REJECTED,sample=1832 source=TEST_INJECTED status=MISSING raw=None reason=no numeric reading available
+2026-10-18T17:17:58.795+00:00,MISSING_INPUT,sample=1832 no reading
+2026-10-18T17:17:59.147+00:00,READING_REJECTED,sample=1833 source=TEST_INJECTED status=MISSING raw=None reason=no numeric reading available
+2026-10-18T17:17:59.147+00:00,MISSING_INPUT,sample=1833 no reading
+2026-10-18T17:17:59.500+00:00,READING_ACCEPTED,sample=1834 source=TEST_INJECTED status=OK raw=28.4 reason=passed source and temperature-range validation
+2026-10-18T17:17:59.852+00:00,ALERT_CLEARED,sample=1835 temperature=28.4 threshold=30.0 clear=28.5
+2026-10-18T17:17:59.852+00:00,READING_ACCEPTED,sample=1835 source=TEST_INJECTED status=OK raw=28.4 reason=passed source and temperature-range validation
+2026-10-18T17:17:59.956+00:00,HEALTH_RECOVERED,DEGRADED -> HEALTHY; Accepted replay value is fresh; no active alert
+2026-10-18T17:18:00.545+00:00,APPLICATION_ERROR,<NotFound '404: Not Found'>
+2026-10-18T17:18:02.764+00:00,STALE_INPUT,HEALTHY -> DEGRADED; Replay input stale; last reading is NOT current
+2026-10-18T17:18:03.387+00:00,APPLICATION_ERROR,<NotFound '404: Not Found'>
+2026-10-18T17:18:05.572+00:00,INPUT_FAILED,DEGRADED -> FAILED; No replay input received within failure limit
+2026-10-18T17:18:06.107+00:00,APPLICATION_ERROR,<NotFound '404: Not Found'>
+2026-10-18T17:18:06.612+00:00,READING_ACCEPTED,sample=1836 source=TEST_INJECTED status=OK raw=28.4 reason=passed source and temperature-range validation
+2026-10-18T17:18:06.626+00:00,HEALTH_RECOVERED,FAILED -> HEALTHY; Accepted replay value is fresh; no active alert
+2026-10-18T17:18:06.689+00:00,PROCESS_EXITED,"pid=2370, code=-9, uptime=20.21s"
+2026-10-18T17:18:06.690+00:00,RESTART_SCHEDULED,"after child=2370, restart_count=1"
+2026-10-18T17:18:07.323+00:00,STARTUP,restarting after prior session
+2026-10-18T17:18:07.324+00:00,RECOVERING,Existing database reopened after process restart
+2026-10-18T17:18:07.333+00:00,WORKER_STARTED,cursor=35 demo=True
+2026-10-18T17:18:07.334+00:00,READING_ACCEPTED,sample=1837 source=TEST_INJECTED status=OK raw=28.4 reason=passed source and temperature-range validation
+2026-10-18T17:18:07.678+00:00,HEALTH_CHANGED,STARTING -> HEALTHY; Accepted replay value is fresh; no active alert
+2026-10-18T17:18:07.687+00:00,READING_ACCEPTED,sample=1838 source=TEST_INJECTED status=OK raw=28.4 reason=passed source and temperature-range validation
+2026-10-18T17:18:08.050+00:00,READING_ACCEPTED,sample=1839 source=TEST_INJECTED status=OK raw=28.4 reason=passed source and temperature-range validation
+2026-10-18T17:18:08.105+00:00,APPLICATION_ERROR,<NotFound '404: Not Found'>
+2026-10-18T17:18:08.405+00:00,READING_ACCEPTED,sample=1840 source=TEST_INJECTED status=OK raw=28.3 reason=passed source and temperature-range validation
+2026-10-18T17:18:08.759+00:00,READING_ACCEPTED,sample=1841 source=TEST_INJECTED status=OK raw=28.3 reason=passed source and temperature-range validation
+2026-10-18T17:18:09.111+00:00,READING_ACCEPTED,sample=1842 source=TEST_INJECTED status=OK raw=28.3 reason=passed source and temperature-range validation
+2026-10-18T17:18:09.117+00:00,APPLICATION_ERROR,<NotFound '404: Not Found'>
+2026-10-18T17:18:09.446+00:00,PROCESS_EXITED,"pid=3806, code=-15, uptime=2.25s"

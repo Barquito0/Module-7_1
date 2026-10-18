@@ -1,0 +1,208 @@
+{
+  "dashboard_running": {
+    "age_seconds": 0.06,
+    "alert_active": false,
+    "counts": {
+      "historical": 1756,
+      "replayed": 2,
+      "total": 1758
+    },
+    "current_value": 21.99,
+    "health": "HEALTHY",
+    "latest_timestamp": "2026-10-18T17:17:46.971+00:00",
+    "origin": "MODULE6_SOURCE_REPLAY",
+    "reading": {
+      "accepted": 21.99,
+      "decision": "ACCEPTED",
+      "origin": "MODULE6_SOURCE_REPLAY",
+      "raw": 21.99,
+      "source_timestamp": "2026-10-01T08:01:00",
+      "status": "OK"
+    },
+    "reason": "Accepted replay value is fresh; no active alert",
+    "sensor_status": "OK"
+  },
+  "historical_count": 1756,
+  "alert_active": {
+    "age_seconds": 0.29,
+    "alert_active": true,
+    "counts": {
+      "historical": 1756,
+      "replayed": 26,
+      "total": 1782
+    },
+    "current_value": 31.0,
+    "health": "DEGRADED",
+    "latest_timestamp": "2026-10-18T17:17:55.426+00:00",
+    "origin": "TEST_INJECTED",
+    "reading": {
+      "accepted": 31.0,
+      "decision": "ACCEPTED",
+      "origin": "TEST_INJECTED",
+      "raw": 31.0,
+      "source_timestamp": null,
+      "status": "OK"
+    },
+    "reason": "Persistent high-temperature alert active",
+    "sensor_status": "OK"
+  },
+  "missing_input": {
+    "age_seconds": 0.03,
+    "alert_active": true,
+    "counts": {
+      "historical": 1756,
+      "replayed": 29,
+      "total": 1785
+    },
+    "current_value": null,
+    "health": "DEGRADED",
+    "latest_timestamp": "2026-10-18T17:17:57.486+00:00",
+    "origin": "TEST_INJECTED",
+    "reading": {
+      "accepted": null,
+      "decision": "REJECTED",
+      "origin": "TEST_INJECTED",
+      "raw": null,
+      "source_timestamp": null,
+      "status": "MISSING"
+    },
+    "reason": "Latest received sensor value is missing/rejected",
+    "sensor_status": "MISSING"
+  },
+  "alert_cleared": {
+    "age_seconds": 0.05,
+    "alert_active": false,
+    "counts": {
+      "historical": 1756,
+      "replayed": 34,
+      "total": 1790
+    },
+    "current_value": 28.4,
+    "health": "HEALTHY",
+    "latest_timestamp": "2026-10-18T17:17:59.852+00:00",
+    "origin": "TEST_INJECTED",
+    "reading": {
+      "accepted": 28.4,
+      "decision": "ACCEPTED",
+      "origin": "TEST_INJECTED",
+      "raw": 28.4,
+      "source_timestamp": null,
+      "status": "OK"
+    },
+    "reason": "Accepted replay value is fresh; no active alert",
+    "sensor_status": "OK"
+  },
+  "stale_input": {
+    "age_seconds": 2.88,
+    "alert_active": false,
+    "counts": {
+      "historical": 1756,
+      "replayed": 34,
+      "total": 1790
+    },
+    "current_value": null,
+    "health": "DEGRADED",
+    "latest_timestamp": "2026-10-18T17:17:59.852+00:00",
+    "origin": "TEST_INJECTED",
+    "reading": {
+      "accepted": 28.4,
+      "decision": "ACCEPTED",
+      "origin": "TEST_INJECTED",
+      "raw": 28.4,
+      "source_timestamp": null,
+      "status": "OK"
+    },
+    "reason": "Replay input stale; last reading is NOT current",
+    "sensor_status": "OK"
+  },
+  "failed_input": {
+    "age_seconds": 5.59,
+    "alert_active": false,
+    "counts": {
+      "historical": 1756,
+      "replayed": 34,
+      "total": 1790
+    },
+    "current_value": null,
+    "health": "FAILED",
+    "latest_timestamp": "2026-10-18T17:17:59.852+00:00",
+    "origin": "TEST_INJECTED",
+    "reading": {
+      "accepted": 28.4,
+      "decision": "ACCEPTED",
+      "origin": "TEST_INJECTED",
+      "raw": 28.4,
+      "source_timestamp": null,
+      "status": "OK"
+    },
+    "reason": "No replay input received within failure limit",
+    "sensor_status": "OK"
+  },
+  "data_recovered": {
+    "age_seconds": 0.06,
+    "alert_active": false,
+    "counts": {
+      "historical": 1756,
+      "replayed": 35,
+      "total": 1791
+    },
+    "current_value": 28.4,
+    "health": "HEALTHY",
+    "latest_timestamp": "2026-10-18T17:18:06.612+00:00",
+    "origin": "TEST_INJECTED",
+    "reading": {
+      "accepted": 28.4,
+      "decision": "ACCEPTED",
+      "origin": "TEST_INJECTED",
+      "raw": 28.4,
+      "source_timestamp": null,
+      "status": "OK"
+    },
+    "reason": "Accepted replay value is fresh; no active alert",
+    "sensor_status": "OK"
+  },
+  "process_recovery": {
+    "killed_pid": 2370,
+    "new_pid": 3806,
+    "readings_before": 8815,
+    "readings_after": 8816,
+    "final_snapshot": {
+      "age_seconds": 0.1,
+      "alert_active": false,
+      "counts": {
+        "historical": 1756,
+        "replayed": 36,
+        "total": 1792
+      },
+      "current_value": 28.4,
+      "health": "HEALTHY",
+      "latest_timestamp": "2026-10-18T17:18:07.334+00:00",
+      "origin": "TEST_INJECTED",
+      "reading": {
+        "accepted": 28.4,
+        "decision": "ACCEPTED",
+        "origin": "TEST_INJECTED",
+        "raw": 28.4,
+        "source_timestamp": null,
+        "status": "OK"
+      },
+      "reason": "Accepted replay value is fresh; no active alert",
+      "sensor_status": "OK"
+    }
+  },
+  "required_event_counts": {
+    "STARTUP": 2,
+    "READING_ACCEPTED": 37,
+    "ALERT_ACTIVATED": 1,
+    "ALERT_CLEARED": 1,
+    "MISSING_INPUT": 4,
+    "STALE_INPUT": 1,
+    "INPUT_FAILED": 1,
+    "HEALTH_RECOVERED": 2,
+    "PROCESS_EXITED": 1,
+    "RESTART_SCHEDULED": 1,
+    "RECOVERING": 1,
+    "APPLICATION_ERROR": 10
+  },
+  "verified": true
+}
