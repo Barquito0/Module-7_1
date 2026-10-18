@@ -1,0 +1,19 @@
+[Unit]
+Description=EGN 321 Unattended Sensor Monitor
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=YOUR_LINUX_USER
+WorkingDirectory=/absolute/path/EGN321_Module7_Assignment7_1
+Environment=PYTHONUNBUFFERED=1
+Environment=REPLAY_SECONDS=2
+Environment=CLASSROOM_DEMO=0
+ExecStart=/absolute/path/to/venv/bin/python supervisor.py
+Restart=always
+RestartSec=3
+StartLimitIntervalSec=0
+
+[Install]
+WantedBy=multi-user.target
