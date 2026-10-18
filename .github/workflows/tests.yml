@@ -1,0 +1,60 @@
+name: Unattended monitor – tests and verified dashboard evidence
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  verify:
+    if: ${{ !startsWith(github.event.head_commit.message, 'evidence:') }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 14
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install Flask and pytest
+        run: python -m pip install -r requirements.txt
+      - name: Rebuild original Module 6 SQLite history from the unchanged CSV
+        run: python -m scripts.seed_history
+      - name: Verify unit and Flask HTTP tests
+        run: python -m pytest -q
+      - name: Install Chrome for actual dashboard screenshots
+        uses: browser-actions/setup-chrome@v1
+      - name: Run controlled SIGKILL, restart and screenshot test
+        run: python scripts/recovery_test.py
+      - name: Verify all required evidence files were generated
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path('evidence/recovery_test.json')
+          assert p.exists() and json.loads(p.read_text())['verified']
+          for name in ('dashboard_running','historical_view','alert_active','alert_cleared',
+                      'missing_input','stale_input','failed_input','final_healthy'):
+              img=Path('evidence')/(name+'.png')
+              assert img.exists() and img.stat().st_size>2000, name
+          for name in ('application_logs.jsonl','application_events.csv','console.log'):
+              assert (Path('evidence')/name).exists(), name
+          PY
+      - name: Commit genuine browser and process recovery evidence
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add evidence/ data/module6_sensor_history.db
+          if ! git diff --cached --quiet; then
+            git commit -m 'evidence: actual Flask dashboard screenshots, alerts, stale data and SIGKILL restart'
+            git push
+          fi
+      - name: Upload recovery evidence as build artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: module7-recovery-evidence
+          path: evidence/
+          if-no-files-found: warn
