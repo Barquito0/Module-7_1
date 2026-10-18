@@ -1,0 +1,10 @@
+__pycache__/
+*.pyc
+.pytest_cache/
+.venv/
+state/*.db
+state/*.db-*
+state/pause.flag
+logs/monitor.jsonl
+logs/monitor.jsonl.*
+*.egg-info/
