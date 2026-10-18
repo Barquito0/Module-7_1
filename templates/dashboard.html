@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>EGN 321 | Unattended Sensor Monitor</title>
+<link rel="stylesheet" href="/static/dashboard.css">
+</head>
+<body>
+<div class="shell">
+  <header class="topbar"><div class="brand"><div class="brand-icon">◉</div><div><b>SENSOR / 07</b><small>EGN 321 · UNATTENDED MONITORING</small></div></div><div class="live-indicator"><span></span> CLASSROOM REPLAY <small id="clock"></small></div></header>
+  <div class="eyebrow">TELEMETRY / SYSTEM OPERATIONS</div>
+  <div class="headline"><div><h1>Temperature monitoring</h1><p>Source-preserving SQLite history · persistent alerts · automatic restart</p></div><span id="health-badge" class="pill {{snapshot.health|lower}}">{{snapshot.health}}</span></div>
+  <section class="stat-grid">
+    <article class="stat accent"><div class="stat-label">ACCEPTED TEMPERATURE <span>°C</span></div><div id="current-value" class="big-number">{% if snapshot.current_value is not none %}{{'%.1f'|format(snapshot.current_value)}}{% else %}—{% endif %}</div><div id="value-note" class="muted">{{ snapshot.reason }}</div></article>
+    <article class="stat"><div class="stat-label">ALERT ENGINE</div><div id="alert" class="big-number smaller">{{'ACTIVE' if snapshot.alert_active else 'NORMAL'}}</div><div class="muted">3 high samples ≥ 30.0°C · clear at ≤ 28.5°C × 2</div></article>
+    <article class="stat"><div class="stat-label">SENSOR DATA STATUS</div><div id="sensor-status" class="big-number smaller">{{snapshot.sensor_status}}</div><div id="age" class="muted">{{snapshot.age_seconds if snapshot.age_seconds is not none else '—'}} seconds since arrival</div></article>
+    <article class="stat"><div class="stat-label">SQLITE ARCHIVE</div><div id="records" class="big-number">{{snapshot.counts.total}}</div><div class="muted">Original records + separately labeled replay rows</div></article>
+  </section>
+  <section class="content-grid">
+    <article class="panel chart-panel">
+      <div class="panel-header"><div><div class="eyebrow">TIME SERIES</div><h2>Temperature history</h2><p>No line crosses missing or rejected samples.</p></div><div class="segmented"><button id="replay-btn" class="sel" onclick="setMode('replay')">REPLAY</button><button id="archive-btn" onclick="setMode('archive')">ORIGINAL ARCHIVE</button></div></div>
+      <svg id="history-chart" role="img" aria-label="Time series plot of accepted temperature showing gaps" viewBox="0 0 920 260" preserveAspectRatio="none"><text x="20" y="50" fill="#b7c3d5">Loading sensor history…</text></svg>
+      <div class="chart-footer"><span><i class="legend-dot"></i> Accepted samples</span><span><i class="legend-dot warn"></i> Gap / invalid sample</span><span id="sample-window"></span></div>
+    </article>
+    <article class="panel detail-panel">
+      <div class="eyebrow">STREAM METADATA</div><h2>Last observation</h2>
+      <div class="metric"><span>Replay arrival (UTC)</span><b id="arrival">{{snapshot.latest_timestamp or 'None yet'}}</b></div>
+      <div class="metric"><span>Original Module 6 timestamp</span><b id="source-time">{{snapshot.reading.source_timestamp if snapshot.reading else 'None yet'}}</b></div>
+      <div class="metric"><span>Raw sensor value</span><b id="raw">{{snapshot.reading.raw if snapshot.reading else '—'}}</b></div>
+      <div class="metric"><span>Validation decision</span><b id="decision">{{snapshot.reading.decision if snapshot.reading else '—'}}</b></div>
+      <div class="metric"><span>Reading provenance</span><b id="origin">{{snapshot.origin or '—'}}</b></div>
+      <div class="reason" id="reason">{{snapshot.reason}}</div>
+      <div class="note">Original 2026 timestamps are <strong>archived evidence</strong>, not proof that the sensor is operating live now. Freshness is based only on the separately recorded arrival time.</div>
+    </article>
+  </section>
+  <section class="panel events-panel"><div class="panel-header"><div><div class="eyebrow">AUDIT TRAIL</div><h2>Recent operational events</h2></div><span class="subtle">Startup · alert transitions · missing input · recovery</span></div><div class="table-scroll"><table><thead><tr><th>UTC EVENT TIME</th><th>EVENT TYPE</th><th>DETAILS</th></tr></thead><tbody id="events-body"><tr><td colspan="3">Loading events...</td></tr></tbody></table></div></section>
+  <footer><span>EGN 321 / MODULE 7.1</span><span>SIMULATION DATA · NOT A CALIBRATED SAFETY SYSTEM</span></footer>
+</div>
+<script>
+let mode='replay', lastHistory='';
+function setMode(v){mode=v;document.getElementById('replay-btn').classList.toggle('sel',v==='replay');document.getElementById('archive-btn').classList.toggle('sel',v==='archive');refreshHistory()}
+function esc(s){return String(s??'—').replace(/[&<>\"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;',"'":'&#39;'}[c]))}
+function parseTime(v){let s=String(v);return new Date(/(?:Z|[+-]\d\d:\d\d)$/.test(s)?s:s+'Z').getTime()}
+function draw(rows){const svg=document.getElementById('history-chart');svg.innerHTML='';if(!rows.length){svg.innerHTML='<text x="35" y="70" fill="#a8b8cc">No observations available</text>';return}
+ const ns='http://www.w3.org/2000/svg',w=920,h=260,l=46,r=15,t=18,b=31;
+ const ts=rows.map(x=>parseTime(x.timestamp)).filter(Number.isFinite);if(!ts.length)return;
+ const start=Math.min(...ts),end=Math.max(...ts),span=Math.max(1,end-start);
+ const vals=rows.map(x=>x.accepted_value).filter(x=>x!==null&&Number.isFinite(Number(x))).map(Number);if(!vals.length){svg.innerHTML='<text x="35" y="70" fill="#a8b8cc">No accepted readings in view</text>';return}
+ const low=Math.floor(Math.min(...vals)-1),high=Math.ceil(Math.max(...vals)+1),vspan=Math.max(1,high-low);
+ const el=(name,attrs,text)=>{const e=document.createElementNS(ns,name);for(const [k,v] of Object.entries(attrs))e.setAttribute(k,v);if(text!==undefined)e.textContent=text;svg.appendChild(e);return e};
+ const x=tt=>l+(tt-start)/span*(w-l-r),y=v=>t+(high-v)/vspan*(h-t-b);
+ for(let j=0;j<5;j++){let v=low+j*vspan/4,yy=y(v);el('line',{x1:l,y1:yy,x2:w-r,y2:yy,stroke:'#263346','stroke-width':'1'});el('text',{x:5,y:yy+4,fill:'#8190a7','font-size':'12'},v.toFixed(1))}
+ let path='',open=false,gaps=0,prev=null;
+ for(const z of rows){const tt=parseTime(z.timestamp),v=z.accepted_value===null?null:Number(z.accepted_value);let invalid=v===null||!Number.isFinite(v);
+  let largeGap=prev!==null&&(tt-prev)>(mode==='archive'?90_000:Math.max(4_000,{{replay_seconds|tojson}}*3_000));
+  if(largeGap){gaps++;el('rect',{x:x(prev),y:t,width:Math.max(3,x(tt)-x(prev)),height:h-t-b,fill:'#d78c43','fill-opacity':'.13'});}
+  if(invalid||largeGap)open=false;
+  if(!invalid){path+=(open?' L ':' M ')+x(tt).toFixed(2)+' '+y(v).toFixed(2);open=true}
+  prev=tt;
+ }
+ el('path',{d:path,stroke:'#65d7d8','stroke-width':'2.8','fill':'none','stroke-linecap':'round','stroke-linejoin':'round'});
+ document.getElementById('sample-window').textContent=rows.length+' records · '+gaps+' detected time gaps';
+ }
+async function refreshHistory(){try{const r=await fetch('/api/history?mode='+mode+'&limit='+(mode==='archive'?5000:200));const j=await r.json();draw(j.rows)}catch(e){console.log(e)}}
+async function refresh(){try{const r=await fetch('/api/status');const s=await r.json();
+ const badge=document.getElementById('health-badge');badge.textContent=s.health;badge.className='pill '+s.health.toLowerCase();
+ document.getElementById('current-value').textContent=s.current_value===null?'—':Number(s.current_value).toFixed(1);
+ document.getElementById('value-note').textContent=s.reason;
+ document.getElementById('alert').textContent=s.alert_active?'ACTIVE':'NORMAL';document.getElementById('alert').className='big-number smaller'+(s.alert_active?' alert-active':'');
+ document.getElementById('sensor-status').textContent=s.sensor_status;document.getElementById('age').textContent=(s.age_seconds===null?'—':s.age_seconds)+' seconds since last replay arrival';
+ document.getElementById('records').textContent=s.counts.total.toLocaleString();document.getElementById('arrival').textContent=s.latest_timestamp||'None yet';
+ document.getElementById('source-time').textContent=s.reading?.source_timestamp||'Not from original CSV';document.getElementById('raw').textContent=s.reading?.raw??'—';document.getElementById('decision').textContent=s.reading?.decision||'—';
+ document.getElementById('origin').textContent=s.origin||'—';document.getElementById('reason').textContent=s.reason;
+ document.getElementById('clock').textContent='· '+new Date().toLocaleTimeString();
+ const ev=await(await fetch('/api/events')).json();document.getElementById('events-body').innerHTML=ev.slice(0,13).map(e=>'<tr><td>'+esc(e.timestamp_utc)+'</td><td><span class="event-tag">'+esc(e.event)+'</span></td><td>'+esc(e.detail)+'</td></tr>').join('');
+ }catch(e){console.warn('Status unavailable',e)}}
+refresh(); if(new URLSearchParams(location.search).get('mode')==='archive'){setMode('archive')}else{refreshHistory()};setInterval(refresh,800);setInterval(refreshHistory,1800);
+</script></body></html>
