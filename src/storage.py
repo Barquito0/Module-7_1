@@ -25,6 +25,11 @@ def initialize(db_path=RUNTIME_DB, seed_path=SEED_DB):
     db_path, seed_path = Path(db_path), Path(seed_path)
     db_path.parent.mkdir(parents=True, exist_ok=True)
     if not db_path.exists():
+        if not seed_path.exists() and seed_path.resolve() == SEED_DB.resolve():
+            # Rebuild original Module 6 seed from untouched CSV if missing on clone.
+            # Never regenerate or overwrite the working DB during app restart.
+            from scripts.seed_history import main as regenerate_seed
+            regenerate_seed()
         if seed_path.exists():
             # Only seed on first boot: never wipe accumulated history on restart.
             shutil.copy2(seed_path, db_path)
